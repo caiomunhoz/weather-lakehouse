@@ -1,12 +1,13 @@
 from pyspark import pipelines as dp
 from pyspark.sql import functions as F
-from utilities.utils import explode_hourly
+from utilities.utils import VALID_WEATHER, explode_hourly
 
 BRONZE_PATH = spark.conf.get('bronze_path')
 
 @dp.table(
     table_properties={'quality': 'silver'}
 )
+@dp.expect_all_or_drop(VALID_WEATHER)
 def observations():
     return (
         spark.read
@@ -27,6 +28,7 @@ def observations():
 @dp.table(
     table_properties={'quality': 'silver'}
 )
+@dp.expect_all_or_drop(VALID_WEATHER)
 def forecasts():
     return (
         spark.read
