@@ -6,7 +6,7 @@ SILVER_PATH = spark.conf.get('silver_path')
 @dlt.table(
     table_properties={'quality': 'gold'}
 )
-def fact_weather_hourly():
+def weather_time_series():
     forecasts = (
         spark.read.table(f'{SILVER_PATH}.forecasts')
         .withColumn('source_type', F.lit('forecast'))
@@ -20,6 +20,6 @@ def fact_weather_hourly():
     return (
         forecasts.union(observations)
         .withColumn('location_id', F.hash(
-            F.concat(F.col('latitude'), F.col('longitude'))
+            F.concat('latitude', 'longitude')
         ))
     )
