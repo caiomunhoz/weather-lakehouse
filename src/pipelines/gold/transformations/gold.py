@@ -1,5 +1,6 @@
 from pyspark import pipelines as dlt
 from pyspark.sql import functions as F
+from utilities.utils import hash_coordinates
 
 SILVER_PATH = spark.conf.get('silver_path')
 
@@ -19,7 +20,6 @@ def weather_time_series():
 
     return (
         forecasts.union(observations)
-        .withColumn('location_id', F.hash(
-            F.concat('latitude', 'longitude')
-        ))
+        .transform(hash_coordinates)
     )
+
