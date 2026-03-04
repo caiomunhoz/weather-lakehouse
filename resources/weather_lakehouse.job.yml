@@ -1,0 +1,41 @@
+resources:
+  jobs:
+    weather_lakehouse:
+      name: weather_lakehouse
+      tasks:
+        - task_key: bronze
+          email_notifications: {}
+          pipeline_task:
+            full_refresh: false
+            pipeline_id: 462287ff-8207-4833-823d-6ec8d75289dd
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          email_notifications: {}
+          pipeline_task:
+            full_refresh: false
+            pipeline_id: d1f6c4ae-a90e-41c9-b051-c03179b32b5c
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          email_notifications: {}
+          pipeline_task:
+            full_refresh: false
+            pipeline_id: 610a245f-8585-4fd7-a668-fcc90ed14cff
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

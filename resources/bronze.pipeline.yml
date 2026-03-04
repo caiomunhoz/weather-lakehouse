@@ -1,0 +1,16 @@
+resources:
+  pipelines:
+    bronze:
+      name: bronze
+      configuration:
+        "landing_path": "/Volumes/weather_lakehouse/landing/"
+      libraries:
+        - glob:
+            include: ../src/bronze/transformations/**
+      catalog: weather_lakehouse
+      channel: CURRENT
+      continuous: false
+      photon: true
+      root_path: ../src/bronze
+      schema: bronze
+      serverless: true
