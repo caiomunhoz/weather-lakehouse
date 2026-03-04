@@ -1,0 +1,16 @@
+resources:
+  pipelines:
+    silver:
+      name: silver
+      configuration:
+        "bronze_path": "weather_lakehouse.bronze"
+      libraries:
+        - glob:
+            include: ../src/silver/transformations/**
+      catalog: weather_lakehouse
+      channel: CURRENT
+      continuous: false
+      photon: true
+      root_path: ../src/silver
+      schema: silver
+      serverless: true

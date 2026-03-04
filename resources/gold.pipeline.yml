@@ -1,0 +1,17 @@
+resources:
+  pipelines:
+    gold:
+      name: gold
+      configuration:
+        "gold_path": "weather_lakehouse.gold"
+        "silver_path": "weather_lakehouse.silver"
+      libraries:
+        - glob:
+            include: ../src/gold/transformations/**
+      catalog: weather_lakehouse
+      channel: CURRENT
+      continuous: false
+      photon: true
+      root_path: ../src/gold
+      schema: gold
+      serverless: true
