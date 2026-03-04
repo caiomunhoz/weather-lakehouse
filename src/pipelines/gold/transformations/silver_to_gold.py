@@ -63,7 +63,7 @@ def forecast_vs_observations():
         )
         .transform(hash_coordinates)
         .select(
-            'location_id'
+            'location_id',
             'latitude',
             'longitude',
             'time',
