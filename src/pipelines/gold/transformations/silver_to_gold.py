@@ -51,7 +51,7 @@ def weather_daily_summary():
 @dlt.table(
     table_properties={'quality': 'gold'}
 )
-def forecast_vs_observations():
+def forecasts_vs_observations():
     forecasts = spark.read.table(f'{SILVER_PATH}.forecasts').alias('f')
     observations = spark.read.table(f'{SILVER_PATH}.observations').alias('o')
 
